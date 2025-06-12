@@ -1,4 +1,3 @@
-```md
 # 📦 Zadanie: Użycie menadżera pakietów Composer w Laravel (na przykładzie mPDF)
 
 ## 🎯 Cel zadania
