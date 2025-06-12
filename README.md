@@ -1,61 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+```md
+# 📦 Zadanie: Użycie menadżera pakietów Composer w Laravel (na przykładzie mPDF)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🎯 Cel zadania
+Celem zadania jest zrozumienie i praktyczne zastosowanie menadżera pakietów Composer w projekcie opartym o Laravel, z dodatkową integracją biblioteki mPDF służącej do generowania plików PDF.
 
-## About Laravel
+## 🔧 Narzędzia użyte w projekcie
+| Narzędzie  | Opis |
+|------------|------|
+| Composer   | Menadżer pakietów PHP do zarządzania bibliotekami i zależnościami. |
+| Laravel    | Framework PHP zgodny z architekturą MVC. |
+| mPDF       | Biblioteka PHP do generowania dokumentów PDF z HTML i CSS. |
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📥 Instalacja i konfiguracja
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Laravel
+Projekt Laravel można utworzyć za pomocą polecenia:
+```bash
+composer create-project laravel/laravel myApp
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Dodanie mPDF do projektu
+Zainstaluj bibliotekę mPDF:
+```bash
+composer require mpdf/mpdf
+```
 
-## Learning Laravel
+## 🧪 Przykład użycia mPDF w kontrolerze Laravel
+```php
+use Mpdf\Mpdf;
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+public function generatePdf()
+{
+    $mpdf = new Mpdf();
+    $mpdf->WriteHTML('<h1>Przykładowy PDF</h1>');
+    return response($mpdf->Output('', 'S'))->header('Content-Type', 'application/pdf');
+}
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ⚙️ Jak działa Composer?
+Główne pliki: `composer.json`, `composer.lock`, oraz katalog `vendor/`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Plik `autoload.php` umożliwia automatyczne ładowanie klas (autoloader).
 
-## Laravel Sponsors
+W Laravelu autoloading działa automatycznie — wystarczy zainstalować bibliotekę przez Composer.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🌍 Inne menadżery pakietów
+| Menadżer  | Język   | Opis |
+|-----------|--------|------|
+| npm       | JavaScript | Zarządzanie pakietami dla Node.js i front-endu |
+| pip       | Python     | Instalacja bibliotek Pythona |
+| NuGet     | .NET/C#    | Oficjalny menadżer pakietów dla platformy .NET |
+| RubyGems  | Ruby       | System pakietów dla Ruby |
 
-### Premium Partners
+## 🚀 Wdrożenie aplikacji
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🔒 Serwer z dostępem do terminala (np. VPS)
+Skopiuj projekt na serwer.
 
-## Contributing
+W katalogu projektu uruchom:
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+Skonfiguruj plik `.env`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ustaw uprawnienia do folderów `storage/` i `bootstrap/cache/`.
 
-## Code of Conduct
+Uruchom aplikację (np. `php artisan serve` lub konfiguracja Apache/Nginx).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 🖼 Hosting współdzielony (bez terminala)
+1. Wykonaj `composer install` lokalnie.
+2. Wygeneruj `.env` i klucz aplikacji.
+3. Prześlij cały projekt (wraz z `vendor/`) na serwer.
+4. Ustaw `public/` jako katalog startowy.
+```
